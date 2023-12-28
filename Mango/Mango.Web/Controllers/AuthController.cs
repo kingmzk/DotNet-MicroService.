@@ -45,11 +45,13 @@ namespace Mango.Web.Controllers
                 return RedirectToAction("Index", "Home");
 
             }
+
             else
             {
-                ModelState.AddModelError("CustomError", responseDto.Message);
+                TempData["error"] = responseDto.Message;
                 return View(loginRequestDto);
             }
+        //    else {ModelState.AddModelError("CustomError", responseDto.Message); return View(loginRequestDto);}
         }
 
 
