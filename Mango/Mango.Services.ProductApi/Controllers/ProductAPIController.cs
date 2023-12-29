@@ -9,7 +9,7 @@ namespace Mango.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -61,7 +61,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
         [HttpPost]
-   //     [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public ResponseDTO Post([FromBody] ProductDto ProductDto)
         {
             try
@@ -82,7 +82,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
         [HttpPut]
-    //    [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public ResponseDTO Put([FromBody] ProductDto ProductDto)
         {
             try
@@ -104,7 +104,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-    //    [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ResponseDTO Delete(int id)
         {
 
