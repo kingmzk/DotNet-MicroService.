@@ -12,6 +12,8 @@
         public static string TokenCookie = "JWTToken";
 
         public static string ProductAPIBase { get; set; }
+        
+        public static string ShoppingCartAPIBase { get; set; }
 
         public enum ApiType
         {

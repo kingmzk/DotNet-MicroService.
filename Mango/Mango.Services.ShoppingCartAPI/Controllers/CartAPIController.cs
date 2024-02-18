@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mango.MessageBus;
 using Mango.Services.ShoppingCartAPI.Data;
 using Mango.Services.ShoppingCartAPI.Models;
 using Mango.Services.ShoppingCartAPI.Models.Dto;
@@ -19,15 +20,20 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
         private readonly IProductService _productService;
         private readonly ICouponService _couponService;
         private ResponseDTO _response;
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
 
-        public CartAPIController(AppDbContext db,IMapper mapper, IProductService productService,ICouponService couponService)
+        public CartAPIController(AppDbContext db,IMapper mapper, IProductService productService,ICouponService couponService, IMessageBus messageBus, IConfiguration configuration)
         {
             this._db = db;
             this._mapper = mapper;
             this._productService = productService;
             this._couponService = couponService;
             this._response = new ResponseDTO();
+            this._messageBus = messageBus;
+            this._configuration = configuration;
         }
+
         
         [HttpPost("CartUpsert")]    
         public async Task<ResponseDTO> CartUpsert(CartDto cartDto)
@@ -112,10 +118,6 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                         cart.CartHeader.Discount = coupon.DiscountAmount;
                     }
                 }
-
-
-
-
                 _response.Result = cart;
             }
             catch (Exception ex)
@@ -148,16 +150,15 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                 await _db.SaveChangesAsync();
                 _response.Result = true;
             }
-
-
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.Message = ex.Message.ToString();
             }
             return _response;
-
         }
+
+
 
         [HttpPost("ApplyCoupon")]
         public async Task<ResponseDTO> RemoveCart([FromBody] CartDto cartDto)
@@ -170,8 +171,6 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                 await _db.SaveChangesAsync();
                 _response.Result = true;
             }
-
-
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
@@ -194,8 +193,6 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                 await _db.SaveChangesAsync();
                 _response.Result = true;
             }
-
-
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
@@ -205,6 +202,26 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
         }
 
+
+
+
+        [HttpPost("EmailCartRequest")]
+        public async Task<ResponseDTO> EmailCartRequest([FromBody] CartDto cartDto)
+        {
+            try
+            {
+                await  _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCart"));
+
+                _response.Result = true;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message.ToString();
+            }
+            return _response;
+
+        }
 
     }
 }
