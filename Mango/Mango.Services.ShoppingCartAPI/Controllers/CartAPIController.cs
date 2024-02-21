@@ -23,8 +23,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
         private readonly IMessageBus _messageBus;
         private readonly IConfiguration _configuration;
 
-        //  public CartAPIController(AppDbContext db,IMapper mapper, IProductService productService,ICouponService couponService, IMessageBus messageBus, IConfiguration configuration)
-        public CartAPIController(AppDbContext db, IMapper mapper, IProductService productService, ICouponService couponService, IConfiguration configuration)
+        public CartAPIController(AppDbContext db,IMapper mapper, IProductService productService,ICouponService couponService, IMessageBus messageBus, IConfiguration configuration)
         {
             this._db = db;
             this._mapper = mapper;
@@ -205,13 +204,13 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
 
 
-        /*
+        
         [HttpPost("EmailCartRequest")]
         public async Task<ResponseDTO> EmailCartRequest([FromBody] CartDto cartDto)
         {
             try
             {
-                await  _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCart"));
+                await  _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCartQueue"));
 
                 _response.Result = true;
             }
@@ -223,6 +222,6 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
             return _response;
 
         }
-        */
+        
     }
 }
