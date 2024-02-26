@@ -5,13 +5,13 @@
 namespace Mango.Services.ShoppingCartAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddShoppingCartTables : Migration
+    public partial class ShoppingCart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "CartHeaders",
                 columns: table => new
                 {
                     CartHeaderId = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace Mango.Services.ShoppingCartAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.CartHeaderId);
+                    table.PrimaryKey("PK_CartHeaders", x => x.CartHeaderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,9 +38,9 @@ namespace Mango.Services.ShoppingCartAPI.Migrations
                 {
                     table.PrimaryKey("PK_CartDetails", x => x.CartDetailsId);
                     table.ForeignKey(
-                        name: "FK_CartDetails_Products_CartHeaderId",
+                        name: "FK_CartDetails_CartHeaders_CartHeaderId",
                         column: x => x.CartHeaderId,
-                        principalTable: "Products",
+                        principalTable: "CartHeaders",
                         principalColumn: "CartHeaderId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -58,7 +58,7 @@ namespace Mango.Services.ShoppingCartAPI.Migrations
                 name: "CartDetails");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CartHeaders");
         }
     }
 }

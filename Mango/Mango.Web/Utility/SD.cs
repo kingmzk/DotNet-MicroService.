@@ -15,6 +15,8 @@
         
         public static string ShoppingCartAPIBase { get; set; }
 
+        public static string OrderAPIBase { get; set; }
+
         public enum ApiType
         {
             GET,
