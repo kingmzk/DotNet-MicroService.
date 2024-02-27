@@ -5,11 +5,12 @@ using Mango.Services.CouponAPI.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Mango.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    [Authorize]
+ 
     public class CouponAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -85,7 +86,7 @@ namespace Mango.Services.CouponAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+      
         public ResponseDTO Post([FromBody] CouponDto couponDto)
         {
             try
@@ -93,6 +94,20 @@ namespace Mango.Services.CouponAPI.Controllers
                 Coupon obj = mapper.Map<Coupon>(couponDto);
                 _db.Coupons.Add(obj);
                 _db.SaveChanges();
+                
+                var options = new Stripe.CouponCreateOptions
+                {
+                    AmountOff = (long)(couponDto.DiscountAmount * 100),
+                    Name = couponDto.CouponCode,
+                    Currency = "usd",
+                    Id = couponDto.CouponCode,
+                   
+                };
+                
+                var service = new Stripe.CouponService();
+                service.Create(options);
+
+                
                 _response.Result = mapper.Map<CouponDto>(obj);
 
             }
@@ -128,7 +143,7 @@ namespace Mango.Services.CouponAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ResponseDTO Delete(int id)
         {
 
@@ -137,6 +152,12 @@ namespace Mango.Services.CouponAPI.Controllers
                 Coupon obj = _db.Coupons.First(x => x.CouponId == id);
                 _db.Coupons.Remove(obj);
                 _db.SaveChanges();
+
+
+                var service = new Stripe.CouponService();
+                service.Delete(obj.CouponCode);
+
+
             }
             catch (Exception e)
             {
