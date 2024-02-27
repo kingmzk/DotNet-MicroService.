@@ -2,13 +2,12 @@
 
 namespace Mango.Web.Service.IService
 {
-    public interface ICouponService
+    public interface IOrderService
     {
-        Task<ResponseDto?> GetCouponAsync(string couponCode);
-        Task<ResponseDto?> GetAllCouponsAsync();
-        Task<ResponseDto?> GetCouponByIdAsync(int id);
-        Task<ResponseDto?> CreateCouponsAsync(CouponDto couponDto);
-        Task<ResponseDto?> UpdateCouponsAsync(CouponDto couponDto);
-        Task<ResponseDto?> DeleteCouponsAsync(int id);
+
+        Task<ResponseDto?> CreateOrder(CartDto cartDto);
+
+        Task<ResponseDto?> CreateStripeSession(StripeRequestDto stripeRequestDto);
+      
     }
 }

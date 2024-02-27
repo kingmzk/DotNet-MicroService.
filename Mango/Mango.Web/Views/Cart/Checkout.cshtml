@@ -61,24 +61,32 @@
                         </div>
                         <hr />
 
-
-                        @foreach (var cartObj in Model.CartDetails)
+                        @if (Model != null)
                         {
-                            <div class="row h-100">
-                                <div class="col-6">
-                                    <span style="font-size:20px">@cartObj.Product.Name</span>
-                                </div>
 
-                                <div class="col-3" style="font-size:11px;">
-                                    <span style="font-size:17px;"> @cartObj.Product.Price.ToString("c")</span>
+                            @foreach (var cartObj in Model.CartDetails)
+                            {
+                                <div class="row h-100">
+                                    <div class="col-6">
+                                        <span style="font-size:20px">@cartObj.Product.Name</span>
+                                    </div>
 
+                                    <div class="col-3" style="font-size:11px;">
+                                        <span style="font-size:17px;"> @cartObj.Product.Price.ToString("c")</span>
+
+                                    </div>
+                                    <div class="col-3" style="font-size:11px;">
+                                        <span style="font-size:17px;"> @cartObj.Count</span>
+                                    </div>
                                 </div>
-                                <div class="col-3" style="font-size:11px;">
-                                    <span style="font-size:17px;"> @cartObj.Count</span>
-                                </div>
-                            </div>
-                            <hr />
+                                <hr />
+                            }
                         }
+                        else
+                        {
+                            <p>Cart is empty.</p>
+                        }
+
                         <div class="row">
                             <div class="col-12 text-center pr-4 text-danger">
                                 Order Total :  @Model.CartHeader.CartTotal.ToString("c") <br />

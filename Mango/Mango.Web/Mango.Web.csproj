@@ -13,7 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Mango.Services.OrderAPI\Mango.Services.OrderAPI.csproj" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\mango.png" />
+    <None Include="wwwroot\Images\order.PNG" />
   </ItemGroup>
 
 </Project>
