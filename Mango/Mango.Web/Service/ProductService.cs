@@ -40,7 +40,8 @@ namespace Mango.Web.Service
         }
 
         public async Task<ResponseDto?> GetAllProductsAsync()
-        {
+        
+            {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
@@ -48,7 +49,7 @@ namespace Mango.Web.Service
             });
 
         }
-
+        /*
         public async Task<ResponseDto?> GetProductAsync(string productCode)
         {
             return await _baseService.SendAsync(new RequestDto()
@@ -58,6 +59,7 @@ namespace Mango.Web.Service
             });
 
         }
+        */
 
         public async Task<ResponseDto?> GetProductByIdAsync(int id)
         {

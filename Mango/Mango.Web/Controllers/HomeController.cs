@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Mango.Web.Controllers
 {
@@ -40,8 +41,8 @@ namespace Mango.Web.Controllers
             return View(list);
         }
 
-
-        [Authorize]
+        
+    //   [Authorize]
         public async Task<IActionResult> ProductDetails(int productId)
         {
             ProductDto model = new();
@@ -58,8 +59,13 @@ namespace Mango.Web.Controllers
 
             return View(model);
         }
-
         
+
+
+
+
+
+
         [Authorize]
         [HttpPost]
         [ActionName("ProductDetails")]

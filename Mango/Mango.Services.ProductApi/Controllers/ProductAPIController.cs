@@ -61,7 +61,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
         [HttpPost]
-        //   [Authorize(Roles = "Admin")]
+     //      [Authorize(Roles = "Admin")]
         public ResponseDTO Post([FromForm] ProductDto ProductDto)
         {
             try
@@ -103,7 +103,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
        [HttpPut]
-       [Authorize(Roles = "Admin")]
+    //   [Authorize(Roles = "Admin")]
         public ResponseDTO Put([FromForm] ProductDto ProductDto)
         {
             try
