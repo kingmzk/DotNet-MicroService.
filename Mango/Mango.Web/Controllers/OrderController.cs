@@ -67,6 +67,7 @@ namespace Mango.Web.Controllers
                 {
                     list = new List<OrderHeaderDto>();
                 }
+                Console.WriteLine(list);
                 return Json(new { data = list });
             }
             catch (Exception ex)
